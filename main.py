@@ -1,4 +1,4 @@
-from PINN_V8 import PINN
+from PINN import PINN
 
 import sys
 import numpy as np
