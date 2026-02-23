@@ -1,11 +1,4 @@
-# from PINN_V1 import PINN
-# from PINN_V2 import PINN
-# from PINN_V3 import PINN
-# from PINN_V4 import PINN
-# from PINN_V5 import PINN
-#from PINN_V7 import PINN
 from PINN_V8 import PINN
-# from mamv_train import PINN
 
 import sys
 import numpy as np
