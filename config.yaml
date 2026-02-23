@@ -1,0 +1,77 @@
+EXPERIMENT: 
+
+paths:
+  general_results_foldername: Results
+  model_foldername: model
+  nodes_general_foldername: nodes
+  nodes_txt: nodes_vamv_2D.txt  # nodes_2D.txt
+  flowfield_txt: flowfield.txt
+  histLoss_txt: histLoss.txt
+  training_time_txt: training_time.txt
+
+seed: 2
+
+# Model Configuration
+model:
+  #hidden_layers: [128, 128, 128, 128, 128, 128, 128]
+  #hidden_layers: [128, 128, 128, 128]
+  hidden_layers: [30, 30, 30]
+  activation: tanh
+
+# Optimizer Configuration
+optimizer:
+  use: BFGS  # 'BFGS', 'L-BFGS-B', 'BROYDEN', 'SLSQP', 'HYBRID-1' (ADAM + L-BFGS-B), 'HYBRID-2' (ADAM + BFGS)
+
+  ADAM:
+    learning_rate_params:
+      lr_init: 0.002
+      lr_min: 0.0001
+      red_exp: 5
+
+  L-BFG-S:
+  
+  BFGS:
+
+  HYBRID:
+    epochs_adam: 1000
+    epochs_lbfgs: 40000
+    
+# Training Configuration
+training:
+  epochs: 50000
+  show_epochs: 50  # number of epochs to log the current epoch
+  early_stopping_epochs: 2000
+  loss_tolerance: 0.0001
+  epoch_savings:   # number of epochs to save data
+    losses: 100
+    weights: 100
+    flowfield: 500
+  precision: double  # 'single', 'double'
+
+nodes:
+  inlet: 
+  outlet: 
+  walls:   # total nodes (upper + lower)
+  collocation: 
+
+flow:  # define only the reynolds or the kinematic_viscosity 
+  dimensions: 3
+  reynolds: 120
+  kinematic_viscosity:
+  density: 1
+
+boundary_conditions:  # all quantities have units (dimensional problem)
+  weighting_factor: 1
+  2d:
+    bc: [
+            [2, 0],        # Inlet: u=2, v=0
+            # [2.83662185, -9.58924275, 8.5389e+04],  # Inlet: u, v, p  used for the airfoil problem
+            [0, 0, 0],     # Outlet: p=0, du/dx=0, dv/dx=0
+            [0, 0]         # Walls: u=0, v=0
+        ]
+  3d:
+    bc: [
+            [2, 0, 0],     # Inlet: u=2, v=0, w=0
+            [0, 0, 0, 0],  # Outlet: p=0, du/dx=0, dv/dx=0, dw/dx=0
+            [0, 0, 0]      # Walls: u=0, v=0, w=0
+        ]
